@@ -4,12 +4,12 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
+        Scanner scanner = new Scanner(System.in);
+
         String[] products = {"Хлеб", "Молоко", "Яйца", "Сыр"};
         int[] price = {30, 55, 57, 170};
 
         Basket basket;
-
-        Scanner scanner = new Scanner(System.in);
 
         File textFile = new File("myBasket.txt");
         if (textFile.exists()) {

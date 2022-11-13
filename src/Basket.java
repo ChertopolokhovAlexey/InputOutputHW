@@ -18,11 +18,10 @@ public class Basket {
         this.products = products;
         this.price = price;
         this.amount = amount;
-        for (int i = 0; i < products.length; i++)  {
+        for (int i = 0; i < products.length; i++) {
             addToCart(i, amount[i]);
         }
     }
-
 
     static Basket loadFromTxtFile(File textFile, String[] products) {
         String[] productList = new String[products.length];
@@ -30,7 +29,7 @@ public class Basket {
         int[] amountList = new int[products.length];
         try (BufferedReader br = new BufferedReader(new FileReader(textFile))) {
             String line;
-            while ((line = br.readLine())!=null) {
+            while ((line = br.readLine()) != null) {
                 String[] basket = line.split(" ");
                 productList[Integer.parseInt(basket[0])] = basket[1];
                 priceList[Integer.parseInt(basket[0])] = Integer.parseInt(basket[2]);
@@ -56,7 +55,6 @@ public class Basket {
         if (!list.containsKey(productNum)) {
             list.put(productNum, amount);
         }
-
     }
 
     int getProductNum(int productNum) {
@@ -105,36 +103,3 @@ public class Basket {
         }
     }
 }
-//todo.ArrayIndexOutOfBoundsException
-//Task 1
-//   + конструктор, принимающий массив цен и названий продуктов;
-//   =====
-//    + addToCart(int productNum, int amount) - метод добавления amount штук продукта номер productNum в корзину;
-//   ================
-//    + printCart() - метод вывода на экран покупательской корзины.
-//=======
-//   + saveTxt(File textFile) - метод сохранения корзины в текстовый файл; использовать встроенные сериализаторы
-//    нельзя;
-//==================
-//    + static Basket loadFromTxtFile(File textFile) - статический(!) метод восстановления объекта корзины из
-//    текстового файла, в который ранее была она сохранена;
-//=============
-//   + геттеры, которые вы посчитаете нужными.
-//================
-// todo После ввода каждой покупки пользователем вам следует сохранять пользовательскую корзину в файл basket.txt.
-// При старте программа должна искать этот файл в корне проекта и если он находится, восстанавливать корзину из
-// него; если файл не найдет, то стоит начать с пустой корзины.
-//
-//    Коммит и пуш в ветку main.
-
-
-//Task 2
-//    Эту задачу делаем в том же репозитории. Отведите ветку serial от main, в которой находится решение первой
-//    задачи.
-//    В этом задании мы будем сохранять и восстанавливать корзину покупок через встроенную сериализацию в Java.
-//    Добавьте метод saveBin(File file) для сохранения в файл в бинарном формате.
-//    Добавьте метод static loadFromBinFile(File file) для загрузки корзины из бинарного файла.
-//    Используйте для этого сериализацию и десериализацию. Замените в main сохранение и загрузку из текстового
-//    файла на бинарный (название пусть будет basket.bin).
-//    Коммит и пуш в ветку serial.
-
