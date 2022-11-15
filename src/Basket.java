@@ -23,22 +23,21 @@ public class Basket {
         }
     }
 
-    static Basket loadFromTxtFile(File textFile, String[] products) {
-        String[] productList = new String[products.length];
-        int[] priceList = new int[products.length];
-        int[] amountList = new int[products.length];
+    static Basket loadFromTxtFile(File textFile) {
         try (BufferedReader br = new BufferedReader(new FileReader(textFile))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] basket = line.split(" ");
-                productList[Integer.parseInt(basket[0])] = basket[1];
-                priceList[Integer.parseInt(basket[0])] = Integer.parseInt(basket[2]);
-                amountList[Integer.parseInt(basket[0])] = Integer.parseInt(basket[3]);
+            String[] productList = br.readLine().split("@");
+            String[] priceFromFile = br.readLine().split("@");
+            String[] amountFromFile = br.readLine().split("@");
+            int[] priceList = new int[productList.length];
+            int[] amountList = new int[productList.length];
+            for (int i = 0; i < productList.length; i++) {
+                priceList[i] = Integer.parseInt(priceFromFile[i]);
+                amountList[i] = Integer.parseInt(amountFromFile[i]);
             }
+            return new Basket(productList, priceList, amountList);
         } catch (IOException e) {
-            System.out.println("Error: " + e);
+            throw new RuntimeException();
         }
-        return new Basket(productList, priceList, amountList);
     }
 
     public void addToCart(int productNum, int amount) {
@@ -70,7 +69,7 @@ public class Basket {
 
     public void printCart() {
         System.out.println("Ваша корзина:");
-        for (Integer i : list.keySet()) {
+        for(Integer i : list.keySet()) {
             if (list.get(i) != 0) {
                 System.out.println(products[i] + ": " + list.get(i) + " шт на сумму: " + (list.get(i) * price[i]) + " руб");
                 this.total = total + (list.get(i) * price[i]);
@@ -91,12 +90,16 @@ public class Basket {
 
     public void saveTxt(File textFile) {
         try (PrintWriter printList = new PrintWriter(textFile)) {
+            for (String product : products) {
+                printList.print(product + "@");
+            }
+            printList.print("\n");
+            for (int i : price) {
+                printList.print(i + "@");
+            }
+            printList.print("\n");
             for (int i = 0; i < products.length; i++) {
-                if (list.get(i) == null) {
-                    printList.println(i + " " + products[i] + " " + price[i] + " " + "0");
-                } else {
-                    printList.println(i + " " + products[i] + " " + price[i] + " " + list.get(i));
-                }
+                printList.print(list.get(i) == null ? 0 + "@" : list.get(i) + "@");
             }
         } catch (IOException e) {
             System.out.println("Error: " + e);

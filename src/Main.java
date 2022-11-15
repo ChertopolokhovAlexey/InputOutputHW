@@ -13,7 +13,7 @@ public class Main {
 
         File textFile = new File("myBasket.txt");
         if (textFile.exists()) {
-            basket = Basket.loadFromTxtFile(textFile, products);
+            basket = Basket.loadFromTxtFile(textFile);
             basket.printBasket();
         } else {
             basket = new Basket(products, price);
@@ -45,6 +45,5 @@ public class Main {
             basket.saveTxt(textFile);
         }
         basket.printCart();
-        //basket.saveTxt(textFile);
     }
 }
