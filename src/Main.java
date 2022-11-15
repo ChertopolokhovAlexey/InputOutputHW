@@ -11,9 +11,9 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
-        File textFile = new File("myBasket.txt");
-        if (textFile.exists()) {
-            basket = Basket.loadFromTxtFile(textFile, products);
+        File file = new File("Basket.bin");
+        if (file.exists()) {
+            basket = Basket.loadFromBinFile(file);
             basket.printBasket();
         } else {
             basket = new Basket(products, price);
@@ -42,7 +42,7 @@ public class Main {
             } catch (NumberFormatException e) {
                 System.out.println("Неверный ввод! Вводить нужно числа!");
             }
-            basket.saveTxt(textFile);
+            basket.saveBin(file);
         }
         basket.printCart();
         //basket.saveTxt(textFile);
