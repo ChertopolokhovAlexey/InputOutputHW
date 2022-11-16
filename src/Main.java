@@ -15,10 +15,10 @@ public class Main {
         if (file.exists()) {
             basket = Basket.loadFromBinFile(file);
             basket.printBasket();
+
         } else {
             basket = new Basket(products, price);
         }
-
         for (int i = 0; i < price.length; i++) {
             System.out.println((i + 1) + " " + products[i] + ": " + price[i] + " руб/шт");
         }
@@ -45,6 +45,5 @@ public class Main {
             basket.saveBin(file);
         }
         basket.printCart();
-        //basket.saveTxt(textFile);
     }
 }
