@@ -2,9 +2,9 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Basket {
-    protected int[] amount;
+public class Basket implements Serializable{
     protected String[] products;
+    protected int[] amount;
     protected int[] price;
     protected int total;
     Map<Integer, Integer> list = new HashMap<>();
@@ -24,13 +24,14 @@ public class Basket {
     }
 
     static Basket loadFromBinFile(File file) {
-        Basket basket;
+        Basket basket = null;
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))){
-         basket =  (Basket) ois.readObject();
+            basket =  (Basket) ois.readObject();
         } catch (Exception e) {
-            throw new RuntimeException();
+            System.out.println(e.getStackTrace());;
         }
         return basket;
+
     }
 
     public void addToCart(int productNum, int amount) {
@@ -82,10 +83,15 @@ public class Basket {
     }
 
     public void saveBin(File file) {
+        int[] amountList = new int[products.length];
+        for (int i = 0; i < products.length; i++) {
+            amountList[i] = list.get(i) == (null)? 0: list.get(i);
+        }
+        Basket basket = new Basket(products, price, amountList);
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
-            oos.writeObject(this);
+            oos.writeObject(basket);
         } catch (Exception e) {
-            System.out.println( e.getMessage());
+            e.getMessage();
         }
     }
 }
